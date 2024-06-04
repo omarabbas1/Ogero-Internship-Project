@@ -1,0 +1,26 @@
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.signin-button {
+  margin-right: 10px;
+}
+
+.signin-button,
+.signup-button {
+  background-color: #563586;
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.signin-button:hover,
+.signup-button:hover {
+  background-color: #b22365;
+  cursor: pointer;
+}
