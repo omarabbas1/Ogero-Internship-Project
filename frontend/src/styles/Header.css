@@ -21,4 +21,6 @@
 .header-buttons {
   display: flex;
   margin-right: 20px;
+  justify-content: space-between;
+  width: 11.5%;
 }

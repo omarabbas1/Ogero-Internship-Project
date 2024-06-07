@@ -1,17 +1,9 @@
-import { signUp } from "../api/authApi";
-
-export const handleSignUpChange = (setSignUpInfo) => (e) => {
-  const { name, value } = e.target;
-  setSignUpInfo((prevForm) => ({
-    ...prevForm,
-    [name]: value,
-  }));
-};
+import { signUpApi } from "../api/authApi";
 
 export const handleSignUpSubmit = (form, setAuthToken) => async (e) => {
   e.preventDefault();
   try {
-    const response = await signUp(form);
+    const response = await signUpApi(form);
     const { token } = response;
     localStorage.setItem("token", token);
     setAuthToken(token);

@@ -1,6 +1,9 @@
-// import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
-// export const signUp = async (signupInfo) => {
-//   const response = await axios.post("/api/signup", signupInfo);
-//   return response.data;
-// };
+export const signInApi = (signInInfo) => {
+  return axiosInstance.post("/signin", signInInfo);
+};
+
+export const signUpApi = (signUpInfo) => {
+  return axiosInstance.post("/signup", signUpInfo);
+};

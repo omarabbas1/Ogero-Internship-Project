@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { handleSignUpChange, handleSignUpSubmit } from "../utils/signUpUtils";
+import { handleSignUpSubmit } from "../utils/signUpUtils";
+import { handleFormChange } from "../utils/formUtils";
 import "../styles/SignUp.css";
 import Button from "../components/Button";
 
@@ -24,7 +25,7 @@ const SignUp = ({ setAuthToken }) => {
             id="username"
             name="username"
             value={signUpInfo.username}
-            onChange={handleSignUpChange(setSignUpInfo)}
+            onChange={handleFormChange(setSignUpInfo)}
             required
           />
         </div>
@@ -35,7 +36,7 @@ const SignUp = ({ setAuthToken }) => {
             id="email"
             name="email"
             value={signUpInfo.email}
-            onChange={handleSignUpChange(setSignUpInfo)}
+            onChange={handleFormChange(setSignUpInfo)}
             required
           />
         </div>
@@ -46,7 +47,7 @@ const SignUp = ({ setAuthToken }) => {
             id="password"
             name="password"
             value={signUpInfo.password}
-            onChange={handleSignUpChange(setSignUpInfo)}
+            onChange={handleFormChange(setSignUpInfo)}
             required
           />
         </div>
