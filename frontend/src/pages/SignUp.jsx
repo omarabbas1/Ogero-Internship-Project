@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { handleSignUpSubmit } from "../utils/signUpUtils";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
+import { handleSignUp } from "../utils/signUpUtils";
 import { handleFormChange } from "../utils/formUtils";
 import "../styles/SignUp.css";
 import Button from "../components/Button";
 
 const SignUp = ({ setAuthToken }) => {
+  const { setUser } = useContext(UserContext);
   const [signUpInfo, setSignUpInfo] = useState({
     username: "",
     email: "",
@@ -15,7 +17,7 @@ const SignUp = ({ setAuthToken }) => {
     <div className="signup-container">
       <h2>Sign Up</h2>
       <form
-        onSubmit={(e) => handleSignUpSubmit(e, signUpInfo, setAuthToken)}
+        onSubmit={(e) => handleSignUp(signUpInfo, setAuthToken, setUser)}
         className="signup-form"
       >
         <div className="form-group">
