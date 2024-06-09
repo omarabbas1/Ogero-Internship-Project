@@ -1,7 +1,4 @@
-export const handleFormChange = (setFormInfo) => (e) => {
-  const { name, value } = e.target;
-  setFormInfo((prevFormInfo) => ({
-    ...prevFormInfo,
-    [name]: value,
-  }));
+export const handleFormChange = (setter) => (event) => {
+  const { name, value } = event.target;
+  setter((prevState) => ({ ...prevState, [name]: value }));
 };

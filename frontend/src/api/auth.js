@@ -8,6 +8,6 @@ export const signUpApi = (signUpInfo) => {
   return axiosInstance.post("/signup", signUpInfo);
 };
 
-export const fetchUsername = async (email) => {
-  return await axiosInstance.get("/username", { params: { email } });
+export const getUsernameApi = (email) => {
+  return axiosInstance.get(`/username?email=${email}`);
 };

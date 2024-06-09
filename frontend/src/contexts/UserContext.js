@@ -1,32 +1,20 @@
-import React, { createContext, useState, useEffect } from "react";
-import { fetchUsername } from "../api/userApi";
+import React, { createContext, useContext, useState } from "react";
 
-export const UserContext = createContext(null);
+const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-
-  const updateUser = async (email) => {
-    try {
-      const username = await fetchUsername(email);
-      setUser({ email, username });
-    } catch (error) {
-      console.error("Error fetching username:", error);
-    }
-  };
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    const email = localStorage.getItem("email");
-    if (token && email) {
-      setUser({ email });
-      updateUser(email);
-    }
-  }, []);
+  const [user, setUser] = useState(() => {
+    const userData = localStorage.getItem("user");
+    return userData ? JSON.parse(userData) : null;
+  });
 
   return (
-    <UserContext.Provider value={{ user, setUser, updateUser }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );
+};
+
+export const useUser = () => {
+  return useContext(UserContext);
 };

@@ -1,12 +1,13 @@
-import { signUpApi } from "../api/userApi";
+import { signUpApi } from "../api/auth";
 
-export const handleSignUp = async (signUpInfo, setAuthToken, setUser) => {
+export const handleSignUpSubmit = async (event, signUpInfo, setUser) => {
+  event.preventDefault();
   try {
     const response = await signUpApi(signUpInfo);
-    const { token, user } = response.data;
-    setAuthToken(token);
-    setUser(user);
+    const { username, email, token } = response.data;
+    setUser({ username, email, token });
+    localStorage.setItem("user", JSON.stringify({ username, email, token }));
   } catch (error) {
-    console.error("Sign-up failed:", error.message);
+    console.error("Sign Up Failed:", error);
   }
 };
