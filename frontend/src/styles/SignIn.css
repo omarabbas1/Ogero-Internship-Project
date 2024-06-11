@@ -1,5 +1,12 @@
+.signin-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 65vh;
+}
+
 .signin-container {
-  max-width: 400px;
+  width: 400px;
   margin: 0 auto;
 }
 

@@ -13,9 +13,6 @@ const Header = () => {
       <div className="header-logo">
         <img src={logo} alt="Logo" onClick={navigateToHome} />
       </div>
-      <div className="header-text">
-        <h1>Ogero Streaming</h1>
-      </div>
       <div className="header-buttons">
         <Button
           text="Sign In"
