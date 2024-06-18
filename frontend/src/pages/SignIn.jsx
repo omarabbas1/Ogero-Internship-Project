@@ -2,22 +2,33 @@ import React, { useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { handleSignInSubmit } from "../utils/signInUtils";
 import { handleFormChange } from "../utils/formUtils";
+import Navigation from "../utils/navigation";
 import Button from "../components/Button";
 import "../styles/SignIn.css";
 
 const SignIn = () => {
   const { setUser } = useUser();
+  const { navigateToHome } = Navigation();
   const [signInInfo, setSignInInfo] = useState({
     email: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
 
   return (
     <div className="signin-wrapper">
       <div className="signin-container">
         <h2>Sign In</h2>
         <form
-          onSubmit={(e) => handleSignInSubmit(e, signInInfo, setUser)}
+          onSubmit={(e) =>
+            handleSignInSubmit(
+              e,
+              signInInfo,
+              setUser,
+              navigateToHome,
+              setErrorMessage
+            )
+          }
           className="signin-form"
         >
           <div className="form-group">
@@ -44,6 +55,9 @@ const SignIn = () => {
           </div>
           <Button text="Sign In" className="signin" type="submit" />
         </form>
+        {errorMessage && (
+          <div className="signin-error-message">{errorMessage}</div>
+        )}
       </div>
     </div>
   );

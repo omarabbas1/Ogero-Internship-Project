@@ -2,29 +2,37 @@ import React from "react";
 import Button from "./Button";
 import "../styles/Header.css";
 import logo from "../assets/ogero-nbg.png";
-import { useNavigation } from "../utils/navigation";
+import Navigation from "../utils/navigation";
+import { useUser } from "../contexts/UserContext";
 
 const Header = () => {
-  const { navigateToHome, navigateToSignIn, navigateToSignUp } =
-    useNavigation();
+  const { navigateToHome, navigateToSignIn, navigateToSignUp } = Navigation();
+  const { user, logout } = useUser();
 
   return (
     <header className="header">
       <div className="header-logo">
         <img src={logo} alt="Logo" onClick={navigateToHome} />
       </div>
-      <div className="header-buttons">
-        <Button
-          text="Sign In"
-          className={"signin"}
-          onClick={navigateToSignIn}
-        />
-        <Button
-          text="Sign Up"
-          className={"signup"}
-          onClick={navigateToSignUp}
-        />
-      </div>
+      {user ? (
+        <div className="logged-in-actions">
+          <div className="username">{user.username}</div>
+          <Button text="Logout" className="logout" onClick={logout} />
+        </div>
+      ) : (
+        <div className="logged-out-actions">
+          <Button
+            text="Sign In"
+            className="signin"
+            onClick={navigateToSignIn}
+          />
+          <Button
+            text="Sign Up"
+            className="signup"
+            onClick={navigateToSignUp}
+          />
+        </div>
+      )}
     </header>
   );
 };

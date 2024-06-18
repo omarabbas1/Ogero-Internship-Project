@@ -40,7 +40,9 @@
   box-sizing: border-box;
 }
 
-button {
-  width: 100%;
-  max-width: 200px;
+.signin-container .signin-error-message {
+  color: red;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 10px;
 }

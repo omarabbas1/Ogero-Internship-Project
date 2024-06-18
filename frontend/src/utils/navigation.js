@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export const useNavigation = () => {
+const Navigation = () => {
   const navigate = useNavigate();
 
   const navigateToHome = () => {
@@ -17,3 +17,5 @@ export const useNavigation = () => {
 
   return { navigateToSignIn, navigateToSignUp, navigateToHome };
 };
+
+export default Navigation;

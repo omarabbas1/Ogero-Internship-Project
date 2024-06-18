@@ -1,5 +1,6 @@
 .signin-button,
-.signup-button {
+.signup-button,
+.logout-button {
   background-color: #563586;
   color: #ffffff;
   padding: 10px;
@@ -8,8 +9,13 @@
   width: 70px;
 }
 
+.logout-button {
+  margin-left: 10px;
+}
+
 .signin-button:hover,
-.signup-button:hover {
+.signup-button:hover,
+.logout-button:hover {
   background-color: #b22365;
   cursor: pointer;
 }

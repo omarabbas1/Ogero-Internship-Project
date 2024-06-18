@@ -8,14 +8,28 @@
 
 .header-logo img {
   margin-left: 10px;
-  width: 100px;
+  width: 120px;
   height: auto;
   cursor: pointer;
 }
 
-.header-buttons {
+.logged-out-actions {
   display: flex;
   margin-right: 20px;
   justify-content: space-between;
   width: 150px;
+}
+
+.logged-in-actions {
+  display: flex;
+  margin-right: 20px;
+  justify-content: center;
+}
+
+.username {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  align-items: center;
+  display: flex;
 }
