@@ -11,9 +11,7 @@ export const handleSignInSubmit = async (
 
   try {
     const response = await signInApi(signInInfo);
-    const { email, token } = response.data;
-    const usernameResponse = await getUsernameApi(email);
-    const { username } = usernameResponse.data;
+    const { email, username, token } = response.data;
     setUser({ username, email, token });
     localStorage.setItem("user", JSON.stringify({ username, email, token }));
     navigateToHome();

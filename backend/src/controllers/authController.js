@@ -41,25 +41,11 @@ const signIn = async (req, res) => {
       return res.status(401).json({ message: "Invalid password" });
     }
     const token = generateToken(user);
-    res.status(200).json({ email: user.email, token });
+    res.status(200).json({ email: user.email, username: user.username, token });
   } catch (error) {
     console.error("Sign In Failed:", error);
     res.status(500).json({ message: "Sign In Failed" });
   }
 };
 
-const getUsername = async (req, res) => {
-  try {
-    const email = req.query.email;
-    const user = await dataAccess.getUserByEmail(email);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json({ username: user.username });
-  } catch (error) {
-    console.error("Get Username Failed:", error);
-    res.status(500).json({ message: "Get Username Failed" });
-  }
-};
-
-module.exports = { signUp, signIn, getUsername };
+module.exports = { signUp, signIn };

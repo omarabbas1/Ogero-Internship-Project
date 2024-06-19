@@ -7,7 +7,3 @@ export const signInApi = (signInInfo) => {
 export const signUpApi = (signUpInfo) => {
   return axiosInstance.post("/auth/signup", signUpInfo);
 };
-
-export const getUsernameApi = (email) => {
-  return axiosInstance.get(`/auth/username?email=${email}`);
-};
