@@ -14,6 +14,12 @@ if (process.env.DB_TYPE === "sql") {
 
 const signUp = async (req, res) => {
   try {
+    const { email } = req.body;
+
+    const existingUser = await dataAccess.getUserByEmail(email);
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+    }
     const user = await dataAccess.createUser(req.body);
     if (!user) {
       return res.status(500).json({ message: "User creation failed" });

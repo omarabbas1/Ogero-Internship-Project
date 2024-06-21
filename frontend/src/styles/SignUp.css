@@ -1,23 +1,28 @@
 .signup-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  min-height: 100%;
 }
 
 .signup-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
   width: 400px;
-  margin: 0 auto;
+}
+
+.signup-container h2 {
+  text-align: center;
+  margin-top: 0px;
 }
 
 .signup-container .signup-form {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.signup-container h2 {
-  text-align: center;
 }
 
 .signup-container .form-group {

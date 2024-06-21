@@ -43,5 +43,10 @@ export const handleSignUpSubmit = async (
     navigateToHome();
   } catch (error) {
     console.error("Sign Up Failed:", error);
+    if (error.response && error.response.data && error.response.data.message) {
+      setErrorMessage(error.response.data.message);
+    } else {
+      setErrorMessage("An unexpected error occurred. Please try again.");
+    }
   }
 };
