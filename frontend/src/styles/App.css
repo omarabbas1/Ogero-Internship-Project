@@ -9,7 +9,6 @@ html,
 }
 
 .main-content {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 85px;
+  height: 100vh;
+  position: relative;
 }

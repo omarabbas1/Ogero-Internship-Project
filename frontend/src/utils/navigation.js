@@ -15,7 +15,16 @@ const Navigation = () => {
     navigate("/signup");
   };
 
-  return { navigateToSignIn, navigateToSignUp, navigateToHome };
+  const navigateToUserProfile = () => {
+    navigate("/user/profile");
+  };
+
+  return {
+    navigateToSignIn,
+    navigateToSignUp,
+    navigateToHome,
+    navigateToUserProfile,
+  };
 };
 
 export default Navigation;

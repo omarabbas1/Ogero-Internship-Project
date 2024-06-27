@@ -6,10 +6,7 @@ const { mongoConfig } = require("../config/dbConfig");
 class NoSqlDataAccess extends DataAccess {
   constructor() {
     super();
-    this.client = new MongoClient(mongoConfig.uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    this.client = new MongoClient(mongoConfig.uri);
     this.client.connect();
     this.db = this.client.db(mongoConfig.dbName);
     this.collection = this.db.collection("users");

@@ -1,21 +1,22 @@
 import React, { createContext, useContext, useState } from "react";
+import Navigation from "../utils/navigation";
 
-// Create the context
 const UserContext = createContext();
 
-// Define the provider component
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const userData = localStorage.getItem("user");
     return userData ? JSON.parse(userData) : null;
   });
 
+  const { navigateToHome } = Navigation();
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
+    navigateToHome();
   };
 
-  // Create the context value
   const contextValue = { user, setUser, logout };
 
   return (
@@ -23,7 +24,6 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-// Define the custom hook for accessing the context
 export const useUser = () => {
   const context = useContext(UserContext);
   if (!context) {

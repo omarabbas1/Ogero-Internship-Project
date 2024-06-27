@@ -1,4 +1,4 @@
-import { signInApi, getUsernameApi } from "../api/auth";
+import { signInApi } from "../api/auth";
 
 export const handleSignInSubmit = async (
   event,

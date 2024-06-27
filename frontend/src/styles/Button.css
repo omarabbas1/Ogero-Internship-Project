@@ -1,11 +1,18 @@
 .signin-button,
 .signup-button,
-.logout-button {
+.logout-button,
+.update-profile-button,
+.change-password-button {
   background-color: #563586;
   color: #ffffff;
   padding: 10px;
   border: none;
   border-radius: 5px;
+}
+
+.signin-button,
+.signup-button,
+.logout-button {
   width: 70px;
 }
 
@@ -13,9 +20,17 @@
   margin-left: 10px;
 }
 
+.update-profile-button,
+.change-password-button {
+  width: 100%;
+  margin-top: 5px;
+}
+
 .signin-button:hover,
 .signup-button:hover,
-.logout-button:hover {
+.logout-button:hover,
+.update-profile-button:hover,
+.change-password-button:hover {
   background-color: #b22365;
   cursor: pointer;
 }

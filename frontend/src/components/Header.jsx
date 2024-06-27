@@ -6,7 +6,12 @@ import Navigation from "../utils/navigation";
 import { useUser } from "../contexts/UserContext";
 
 const Header = () => {
-  const { navigateToHome, navigateToSignIn, navigateToSignUp } = Navigation();
+  const {
+    navigateToHome,
+    navigateToSignIn,
+    navigateToSignUp,
+    navigateToUserProfile,
+  } = Navigation();
   const { user, logout } = useUser();
 
   return (
@@ -16,7 +21,9 @@ const Header = () => {
       </div>
       {user ? (
         <div className="logged-in-actions">
-          <div className="username">{user.username}</div>
+          <div className="username" onClick={navigateToUserProfile}>
+            {user.username}
+          </div>
           <Button text="Logout" className="logout" onClick={logout} />
         </div>
       ) : (
