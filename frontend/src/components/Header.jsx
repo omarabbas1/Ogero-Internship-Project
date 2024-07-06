@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import "../styles/Header.css";
 import logo from "../assets/ogero-nbg.png";
+import defaultUserIcon from "../assets/user.png";
 import Navigation from "../utils/navigation";
 import { useUser } from "../contexts/UserContext";
 
@@ -13,6 +14,16 @@ const Header = () => {
     navigateToUserProfile,
   } = Navigation();
   const { user, logout } = useUser();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleLogout = () => {
+    setDropdownVisible(false);
+    logout();
+  };
 
   return (
     <header className="header">
@@ -21,10 +32,22 @@ const Header = () => {
       </div>
       {user ? (
         <div className="logged-in-actions">
-          <div className="username" onClick={navigateToUserProfile}>
-            {user.username}
+          <div className="user-profile-header" onClick={toggleDropdown}>
+            <img
+              src={user.profilePicture || defaultUserIcon}
+              alt="profile"
+              className="user-icon"
+            />
+            <div className="username">{user.username}</div>
+            <div className={`dropdown-menu ${dropdownVisible ? "show" : ""}`}>
+              <div className="dropdown-item" onClick={navigateToUserProfile}>
+                Profile
+              </div>
+              <div className="dropdown-item" onClick={handleLogout}>
+                Logout
+              </div>
+            </div>
           </div>
-          <Button text="Logout" className="logout" onClick={logout} />
         </div>
       ) : (
         <div className="logged-out-actions">
