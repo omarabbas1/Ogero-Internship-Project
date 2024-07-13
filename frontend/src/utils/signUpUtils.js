@@ -37,9 +37,12 @@ export const handleSignUpSubmit = async (
   }
   try {
     const response = await signUpApi(signUpInfo);
-    const { username, email, token } = response.data;
-    setUser({ username, email, token });
-    localStorage.setItem("user", JSON.stringify({ username, email, token }));
+    const { id, username, email, token } = response.data;
+    setUser({ id, username, email, token });
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ id, username, email, token })
+    );
     navigateToHome();
   } catch (error) {
     console.error("Sign Up Failed:", error);

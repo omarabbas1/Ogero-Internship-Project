@@ -1,32 +1,43 @@
-const bcrypt = require("bcrypt");
-const SqlDataAccess = require("../data/sqlDataAccess");
-const NoSqlDataAccess = require("../data/nosqlDataAccess");
+const {
+  getUserByEmail,
+  createUser,
+  getUserByUsername,
+  getUserProfile,
+} = require("../services/userServices");
 const { generateToken } = require("../utils/jwtUtils");
-
-let dataAccess;
-if (process.env.DB_TYPE === "sql") {
-  dataAccess = new SqlDataAccess();
-} else if (process.env.DB_TYPE === "nosql") {
-  dataAccess = new NoSqlDataAccess();
-} else {
-  throw new Error("Unsupported DB_TYPE");
-}
+const bcrypt = require("bcrypt");
 
 const signUp = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, username } = req.body;
 
-    const existingUser = await dataAccess.getUserByEmail(email);
+    const existingUser = await getUserByEmail(email);
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+      return res.status(400).json({ message: "Email is already used" });
     }
-    const user = await dataAccess.createUser(req.body);
+
+    const existingUserByUsername = await getUserByUsername(username);
+    if (existingUserByUsername) {
+      return res.status(400).json({ message: "Username is already taken" });
+    }
+
+    const user = await createUser(req.body);
     if (!user) {
       return res.status(500).json({ message: "User creation failed" });
     }
 
-    const token = generateToken(user);
-    res.status(201).json({ username: user.username, email: user.email, token });
+    const token = generateToken({
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    });
+
+    res.status(201).json({
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      token,
+    });
   } catch (error) {
     console.error("Sign Up Failed:", error);
     res.status(500).json({ message: "Sign Up Failed" });
@@ -36,7 +47,7 @@ const signUp = async (req, res) => {
 const signIn = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await dataAccess.getUserByEmail(email);
+    const user = await getUserByEmail(email);
     if (!user) {
       console.error("User not found");
       return res.status(401).json({ message: "User not found" });
@@ -46,8 +57,21 @@ const signIn = async (req, res) => {
       console.error("Invalid password");
       return res.status(401).json({ message: "Invalid password" });
     }
-    const token = generateToken(user);
-    res.status(200).json({ email: user.email, username: user.username, token });
+    const token = generateToken({
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    });
+
+    const userProfile = await getUserProfile(user._id);
+
+    res.status(200).json({
+      id: userProfile._id,
+      username: userProfile.username,
+      email: userProfile.email,
+      displayName: userProfile.displayName,
+      token,
+    });
   } catch (error) {
     console.error("Sign In Failed:", error);
     res.status(500).json({ message: "Sign In Failed" });

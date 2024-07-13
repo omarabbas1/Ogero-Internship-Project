@@ -33,11 +33,7 @@ const Header = () => {
       {user ? (
         <div className="logged-in-actions">
           <div className="user-profile-header" onClick={toggleDropdown}>
-            <img
-              src={user.profilePicture || defaultUserIcon}
-              alt="profile"
-              className="user-icon"
-            />
+            <img src={defaultUserIcon} alt="profile" className="user-icon" />
             <div className="username">{user.username}</div>
             <div className={`dropdown-menu ${dropdownVisible ? "show" : ""}`}>
               <div className="dropdown-item" onClick={navigateToUserProfile}>

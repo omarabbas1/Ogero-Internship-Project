@@ -10,7 +10,7 @@ const mysqlConfig = {
 
 const mongoConfig = {
   uri: process.env.MONGO_URI,
-  dbName: process.env.MONGO_DB,
+  dbName: process.env.DB_NAME,
 };
 
 module.exports = { mysqlConfig, mongoConfig };

@@ -1,46 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useUser } from "../contexts/UserContext";
-import {
-  handleProfileUpdate,
-  handleProfilePictureChange,
-  fetchUserProfile,
-} from "../utils/profileUtils";
+import { handleProfileUpdate } from "../utils/profileUtils";
 import "../styles/UserProfile.css";
 import { handleFormChange } from "../utils/formUtils";
 import Button from "../components/Button";
-import Navigation from "../utils/navigation";
 
 const UserProfile = () => {
-  const { user, setUser } = useUser();
-  const { navigateToUserProfile } = Navigation();
+  const { user, updateUser } = useUser();
   const [profileData, setProfileData] = useState({
-    displayName: "",
-    profilePicture: null,
+    displayName: user.displayName || "",
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(() => {
-    fetchUserProfile(user.token, setProfileData);
-  }, [user.token, setProfileData]);
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await handleProfileUpdate(
+        event,
+        profileData,
+        updateUser,
+        user.id,
+        user.token,
+        setErrorMessage,
+        setSuccessMessage,
+        user.displayName
+      );
+    } catch (error) {
+      setErrorMessage("Failed to update profile. Please try again.");
+    }
+  };
 
   return (
     <div className="user-profile-wrapper">
       <div className="user-profile-container">
         <h2>Your Profile</h2>
-        <form
-          onSubmit={(e) =>
-            handleProfileUpdate(
-              e,
-              profileData,
-              setUser,
-              user.token,
-              setErrorMessage,
-              setSuccessMessage
-            )
-          }
-          className="user-profile-form"
-        >
+        <form onSubmit={handleFormSubmit} className="user-profile-form">
           <div className="form-group">
             <label htmlFor="username">Username:</label>
             <input
@@ -71,16 +66,6 @@ const UserProfile = () => {
               onChange={handleFormChange(setProfileData)}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="profilePicture">Profile Picture:</label>
-            <input
-              type="file"
-              id="profilePicture"
-              name="profilePicture"
-              accept="image/*"
-              onChange={handleProfilePictureChange(setProfileData)}
-            />
-          </div>
           <Button
             text="Update Profile"
             className="update-profile"
@@ -93,11 +78,7 @@ const UserProfile = () => {
         {successMessage && (
           <div className="profile-success-message">{successMessage}</div>
         )}
-        <Button
-          text="Change Password"
-          className="change-password"
-          onClick={navigateToUserProfile}
-        />
+        <Button text="Change Password" className="change-password" />
       </div>
     </div>
   );

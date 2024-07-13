@@ -11,9 +11,12 @@ export const handleSignInSubmit = async (
 
   try {
     const response = await signInApi(signInInfo);
-    const { email, username, token } = response.data;
-    setUser({ username, email, token });
-    localStorage.setItem("user", JSON.stringify({ username, email, token }));
+    const { id, email, username, token, displayName } = response.data;
+    setUser({ id, username, email, token, displayName });
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ id, username, email, token, displayName })
+    );
     navigateToHome();
   } catch (error) {
     console.error("Sign In Failed:", error);

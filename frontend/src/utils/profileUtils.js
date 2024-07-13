@@ -1,44 +1,38 @@
-import { getUserProfile, updateUserProfile } from "../api/userProfile";
-
-export const fetchUserProfile = async (token, setProfileData) => {
-  try {
-    const userProfile = await getUserProfile(token);
-    setProfileData({
-      displayName: userProfile.displayName || "",
-      profilePicture: userProfile.profilePicture || null,
-    });
-  } catch (error) {
-    console.error("Failed to fetch user profile:", error);
-  }
-};
+import { updateUserProfile } from "../api/userProfile";
 
 export const handleProfileUpdate = async (
   e,
   profileData,
-  setUser,
+  updateUser,
+  userId,
   token,
   setErrorMessage,
-  setSuccessMessage
+  setSuccessMessage,
+  currentDisplayName
 ) => {
   e.preventDefault();
   try {
-    const updatedProfile = await updateUserProfile(token, profileData);
-    setUser((prevUser) => ({
-      ...prevUser,
-      displayName: updatedProfile.displayName,
-      profilePicture: updatedProfile.profilePicture,
-    }));
+    if (profileData.displayName === "") {
+      setErrorMessage("Please fill in the fields before trying to update!");
+      setSuccessMessage("");
+      return;
+    }
+
+    if (profileData.displayName === currentDisplayName) {
+      setErrorMessage("The display name is the same as the current one.");
+      setSuccessMessage("");
+      return;
+    }
+
+    const updatedProfile = await updateUserProfile(userId, token, profileData);
+    updateUser({
+      displayName: updatedProfile.data.displayName,
+    });
     setSuccessMessage("Profile updated successfully");
+    setErrorMessage("");
   } catch (error) {
     console.error("Profile update failed:", error);
     setErrorMessage("Profile update failed");
+    setSuccessMessage("");
   }
-};
-
-export const handleProfilePictureChange = (setProfileData) => (e) => {
-  const file = e.target.files[0];
-  setProfileData((prevData) => ({
-    ...prevData,
-    profilePicture: file,
-  }));
 };

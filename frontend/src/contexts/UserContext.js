@@ -17,7 +17,18 @@ export const UserProvider = ({ children }) => {
     navigateToHome();
   };
 
-  const contextValue = { user, setUser, logout };
+  const updateUser = (profileData) => {
+    setUser((prevUser) => {
+      const updatedUser = {
+        ...prevUser,
+        ...profileData,
+      };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return updatedUser;
+    });
+  };
+
+  const contextValue = { user, setUser, logout, updateUser };
 
   return (
     <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
