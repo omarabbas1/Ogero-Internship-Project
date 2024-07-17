@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useUser } from "../contexts/UserContext";
-import { handleSignUpSubmit } from "../utils/signUpUtils";
+import { handleSignUpSubmit } from "../utils/authUtils";
 import { handleFormChange } from "../utils/formUtils";
 import Navigation from "../utils/navigation";
 import Button from "../components/Button";

@@ -1,11 +1,12 @@
 import { signUpApi } from "../api/auth";
+import { signInApi } from "../api/auth";
 
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
-const isStrongPassword = (password) => {
+export const isStrongPassword = (password) => {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return passwordRegex.test(password);
@@ -46,6 +47,34 @@ export const handleSignUpSubmit = async (
     navigateToHome();
   } catch (error) {
     console.error("Sign Up Failed:", error);
+    if (error.response && error.response.data && error.response.data.message) {
+      setErrorMessage(error.response.data.message);
+    } else {
+      setErrorMessage("An unexpected error occurred. Please try again.");
+    }
+  }
+};
+
+export const handleSignInSubmit = async (
+  event,
+  signInInfo,
+  setUser,
+  navigateToHome,
+  setErrorMessage
+) => {
+  event.preventDefault();
+
+  try {
+    const response = await signInApi(signInInfo);
+    const { id, email, username, token, displayName } = response.data;
+    setUser({ id, username, email, token, displayName });
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ id, username, email, token, displayName })
+    );
+    navigateToHome();
+  } catch (error) {
+    console.error("Sign In Failed:", error);
     if (error.response && error.response.data && error.response.data.message) {
       setErrorMessage(error.response.data.message);
     } else {

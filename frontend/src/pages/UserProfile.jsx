@@ -3,10 +3,12 @@ import { useUser } from "../contexts/UserContext";
 import { handleProfileUpdate } from "../utils/profileUtils";
 import "../styles/UserProfile.css";
 import { handleFormChange } from "../utils/formUtils";
+import Navigation from "../utils/navigation";
 import Button from "../components/Button";
 
 const UserProfile = () => {
   const { user, updateUser } = useUser();
+  const { navigateToChangePassword } = Navigation();
   const [profileData, setProfileData] = useState({
     displayName: user.displayName || "",
   });
@@ -78,7 +80,11 @@ const UserProfile = () => {
         {successMessage && (
           <div className="profile-success-message">{successMessage}</div>
         )}
-        <Button text="Change Password" className="change-password" />
+        <Button
+          text="Change Password"
+          className="change-password"
+          onClick={navigateToChangePassword}
+        />
       </div>
     </div>
   );

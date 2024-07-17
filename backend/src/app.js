@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const { mongoConfig } = require("./config/dbConfig");
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
-const userProfileRoutes = require("./routes/userProfileRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 mongoose
   .connect(mongoConfig.uri, {
@@ -25,7 +25,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/auth", authRoutes);
-app.use("/user", userProfileRoutes);
+app.use("/user", userRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

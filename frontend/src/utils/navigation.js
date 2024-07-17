@@ -19,11 +19,16 @@ const Navigation = () => {
     navigate("/user/profile");
   };
 
+  const navigateToChangePassword = () => {
+    navigate("/user/profile/change-password");
+  };
+
   return {
     navigateToSignIn,
     navigateToSignUp,
     navigateToHome,
     navigateToUserProfile,
+    navigateToChangePassword,
   };
 };
 

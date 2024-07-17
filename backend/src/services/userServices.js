@@ -66,10 +66,41 @@ const updateUserProfile = async (userId, updateData) => {
   }
 };
 
+const updateUserPassword = async (userId, newPassword) => {
+  try {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { password: hashedPassword },
+      { new: true }
+    );
+    return updatedUser;
+  } catch (error) {
+    console.error("Error in updateUserPassword:", error);
+    throw error;
+  }
+};
+
+const verifyUserPassword = async (userId, currentPassword) => {
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    return isMatch;
+  } catch (error) {
+    console.error("Error in verifyUserPassword:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   createUser,
   getUserByEmail,
   getUserByUsername,
   getUserProfile,
   updateUserProfile,
+  updateUserPassword,
+  verifyUserPassword,
 };

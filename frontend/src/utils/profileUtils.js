@@ -1,4 +1,4 @@
-import { updateUserProfile } from "../api/userProfile";
+import { updateUserProfileApi } from "../api/userProfile";
 
 export const handleProfileUpdate = async (
   e,
@@ -24,7 +24,11 @@ export const handleProfileUpdate = async (
       return;
     }
 
-    const updatedProfile = await updateUserProfile(userId, token, profileData);
+    const updatedProfile = await updateUserProfileApi(
+      userId,
+      token,
+      profileData
+    );
     updateUser({
       displayName: updatedProfile.data.displayName,
     });
